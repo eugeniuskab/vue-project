@@ -181,6 +181,21 @@ export const useServerStore = defineStore('servers', {
           }
         })
       }, 4000)
-    }
+    },
+    
+    dismissAlert(id: string) {
+      this.alerts = this.alerts.filter((a) => a.id !== id)
+    },
+
+    addAlert(serverId: string, serverName: string, message: string, level: 'info' | 'warning' | 'critical') {
+      this.alerts.unshift({
+        id: 'alt-' + Date.now().toString().slice(-4),
+        serverId,
+        serverName,
+        message,
+        level,
+        timestamp: 'Just now'
+      })
+    },
   }
 })
