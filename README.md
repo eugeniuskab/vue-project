@@ -1,48 +1,58 @@
-# vue-project
+# Homelab Sentinel
 
-This template should help get you started developing with Vue 3 in Vite.
+A single-page server infrastructure monitoring dashboard built with **Vue 3**, **TypeScript**, **Pinia**, and **Vue Router**. The application simulates real-time server metrics (CPU, RAM, Disk utilization), tracks system alerts, and allows provisioning and managing server nodes with persistent browser storage.
 
-## Recommended IDE Setup
+**Live Demo:** [https://eugeniuskab.github.io/vue-project/](https://eugeniuskab.github.io/vue-project/)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Recommended Browser Setup
+## Features
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Infrastructure Dashboard (`/`):** Overview of cluster KPIs (total nodes, online count, warnings, average CPU load) and live-updating server cards with power and reboot controls.
+- **Server Inventory (`/servers`):** Searchable and filterable table of server nodes with a modal form to provision new instances and delete existing ones.
+- **System Incident Log (`/alerts`):** Filterable list of automated threshold warnings and manual events with incident acknowledgment.
+- **State Persistence:** All server configurations and states are automatically persisted to `localStorage` via Pinia.
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Tech Stack
 
-## Customize configuration
+- **Framework:** Vue 3 (Composition API, `<script setup>`)
+- **Language:** TypeScript
+- **State Management:** Pinia
+- **Routing:** Vue Router (Hash History mode for static hosting)
+- **Build Tool:** Vite
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## Project Architecture
 
-```sh
-npm install
+```text
+src/
+├── components/          # Reusable UI components (props & emits)
+│   ├── AlertItem.vue    # Individual incident card with severity styling
+│   ├── AppModal.vue     # Reusable modal wrapper using <slot>
+│   ├── MetricBar.vue    # Color-coded resource utilization progress bar
+│   ├── ServerCard.vue   # Server node overview card with action controls
+│   └── StatusBadge.vue  # Dynamic status indicator pill
+├── router/
+│   └── index.ts         # Application routes configuration
+├── stores/
+│   └── servers.ts       # Pinia store, getters, metrics simulation & localStorage sync
+├── types/
+│   └── server.ts        # TypeScript interfaces and union types
+├── views/               # Route-level page components
+│   ├── AlertsView.vue
+│   ├── DashboardView.vue
+│   └── ServersView.vue
+├── App.vue              # Root layout and navigation bar
+└── main.ts              # Application entry point
 ```
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-npm run dev
-```
+## Local Setup
+- **Install dependencies:** `npm install`
+- **Start the development server:** `npm run dev`
+- **Type-check and build for production:** `npm run build`
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
